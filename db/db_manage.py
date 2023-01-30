@@ -5,6 +5,7 @@ DATABASE_NAME = 'shopping.db'
 DB_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 BASE_SQL_FILE = os.path.join(DB_DIRECTORY, 'base.sql')
 PATCHES_DIRECTORY = os.path.join(DB_DIRECTORY, 'patches')
+EXCLUSION_LIST = ['.gitkeep']
 
 def get_connection():
     return sqlite3.connect(os.path.join(DB_DIRECTORY, DATABASE_NAME))
@@ -54,7 +55,7 @@ def apply_patches():
     with connection:
         for patch_name, patch in patches.items():
             print(f"XKCD: {check_patch_history(patch_name)}")
-            if not check_patch_history(patch_name):
+            if not check_patch_history(patch_name) and patch_name not in EXCLUSION_LIST:
                 cursor.executescript(patch)
 
                 cursor.execute('''
@@ -66,7 +67,10 @@ def apply_patches():
 
                 print(f"Applied patch {patch_name} to {DATABASE_NAME}")
             else:
-                print(f"Skipping: {patch_name} already applied to {DATABASE_NAME}")
+                if patch_name in EXCLUSION_LIST:
+                    print(f"Skipping: {patch_name} for {DATABASE_NAME} in the exclusion list")
+                else:
+                    print(f"Skipping: {patch_name} already applied to {DATABASE_NAME}")
 
 
 def test():
