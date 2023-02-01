@@ -1,7 +1,8 @@
 from flask import Flask
-from shopping.routes import ROUTES
+from shopping.routes.users import user_blueprint
+
 
 app = Flask(__name__)
 
-for (url, options) in ROUTES.items():
-    app.add_url_rule(url, **options)
+app.register_blueprint(user_blueprint)
+# app.register_blueprint(other_blueprint)

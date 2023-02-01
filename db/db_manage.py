@@ -54,7 +54,6 @@ def apply_patches():
 
     with connection:
         for patch_name, patch in patches.items():
-            print(f"XKCD: {check_patch_history(patch_name)}")
             if not check_patch_history(patch_name) and patch_name not in EXCLUSION_LIST:
                 cursor.executescript(patch)
 
