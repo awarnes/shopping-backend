@@ -22,8 +22,9 @@ def create_list_for_user(user_id: int, shopping_list: ShoppingList) -> bool:
     owners = set(shopping_list.owners)
     owners.add(user_id)
     return insert_one(
-        "INSERT INTO lists (items, owners, subscribers) VALUES (:items, :owners, :subscribers);",
+        "INSERT INTO lists (items, owners, subscribers, name) VALUES (:items, :owners, :subscriber, :name);",
         {
+            "name": shopping_list.name,
             "items": str(shopping_list.items),
             "owners": str(list(owners)),
             "subscribers": str(shopping_list.subscribers)

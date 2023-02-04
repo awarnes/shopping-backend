@@ -8,12 +8,14 @@ CREATE TABLE IF NOT EXISTS users (
     name TEXT NULL,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
+    roles TEXT NOT NULL,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS lists (
     id INTEGER PRIMARY KEY NOT NULL,
+    name TEXT NULL,
     items TEXT NULL,
     owners TEXT NULL,
     subscribers TEXT NULL,

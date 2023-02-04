@@ -8,11 +8,13 @@ class ShoppingList:
         items: List[int],
         owners: List[int],
         subscribers: Optional[List[int]],
+        name: Optional[str] = None,
         id: Optional[int] = None,
         created: Optional[str] = None,
         updated: Optional[str] = None
     ):
         self.id = id
+        self.name = name
         self.items = items
         self.owners = owners
         self.subscribers = subscribers
@@ -21,6 +23,7 @@ class ShoppingList:
 
 class ShoppingListSchema(Schema):
     id = fields.Int(allow_none=True)
+    name = fields.Str(allow_none=True)
     items = fields.List(fields.Int)
     owners = fields.List(fields.Int)
     subscribers = fields.List(fields.Int, allow_none=True)
