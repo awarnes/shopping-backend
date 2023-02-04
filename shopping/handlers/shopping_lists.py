@@ -5,11 +5,9 @@ from ..model.shopping_list import ShoppingList, ShoppingListSchema
 
 def get_lists_for_user(id: int) -> ShoppingList | ValidationError:
     try:
-        rows = fetch_all(
-            "SELECT * FROM lists WHERE owners LIKE '%:user_id,%'",
-            {"user_id": id}
-        )
-        return ShoppingListSchema().load(rows, many=True)
+        rows = fetch_all("SELECT * FROM lists;")
+        filtered_rows = filter(lambda row: id in row['owners'], rows)
+        return ShoppingListSchema().load(filtered_rows, many=True)
     except ValidationError as error:
         print(f"Error getting lists {error}")
         return []
@@ -20,10 +18,14 @@ def get_list_by_id(id: int) -> ShoppingList | dict:
         return ShoppingListSchema().load(shopping_list)
     return {}
 
-def create_list_for_user(user_id: int, list: ShoppingList):
-    owners = set(list.owners)
+def create_list_for_user(user_id: int, shopping_list: ShoppingList) -> bool:
+    owners = set(shopping_list.owners)
     owners.add(user_id)
     return insert_one(
         "INSERT INTO lists (items, owners, subscribers) VALUES (:items, :owners, :subscribers);",
-        {"items": str(list.items), "owners": str(list(owners)), "subscribers": str[list.subscribers]}
+        {
+            "items": str(shopping_list.items),
+            "owners": str(list(owners)),
+            "subscribers": str(shopping_list.subscribers)
+        }
     )

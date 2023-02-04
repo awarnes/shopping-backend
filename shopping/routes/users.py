@@ -16,16 +16,15 @@ def get_users():
 def get_user_by_id(id: int):
     return jsonify(UserSchema().dump(users.get_user_by_id(id)))
 
-@user_blueprint.route('', methods=['POST'])
+@user_blueprint.route('/user', methods=['POST'])
 def add_user():
     try:
         user = UserSchema().load(request.get_json())
     except ValidationError as error:
         return error, 400
 
-    added_user = users.add_user(user)
-    if added_user:
-        return jsonify(added_user), 200
+    if users.add_user(user):
+        return '', 200
     return make_response(jsonify({"message": "User failed to be added"}), 500)
 
 # @user_blueprint.route('/login', methods=['POST'])
@@ -37,16 +36,16 @@ def add_user():
 
 @user_blueprint.route('/user/<int:id>/list')
 def get_lists_for_user(id: int):
-    return jsonify(ShoppingListSchema().dump(shopping_lists.get_lists_for_user(id)), many=True)
+    return jsonify(ShoppingListSchema().dump(shopping_lists.get_lists_for_user(id), many=True))
 
-@user_blueprint.route('/user/<int:user_id>/list', methods=['POST'])
+@user_blueprint.route('/user/<int:id>/list', methods=['POST'])
+@basic_authentication
 def create_list_for_user(id: int):
     try:
         shopping_list = ShoppingListSchema().load(request.get_json())
     except ValidationError as error:
         return error, 400
-    
-    created_list = shopping_lists.create_list_for_user(id, shopping_list)
-    if created_list:
-        return jsonify(created_list), 200
+
+    if shopping_lists.create_list_for_user(id, shopping_list):
+        return make_response(jsonify({"message": ''}), 200)
     return make_response(jsonify({"message": 'List was not created'}), 500)
