@@ -3,3 +3,6 @@
 .DS_Store
 !.gitkeep
 db/shopping.db
+**/secrets.json
+
+test.py
