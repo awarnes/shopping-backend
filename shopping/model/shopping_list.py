@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import List, Optional
 from marshmallow import Schema, fields, post_load
 
@@ -31,5 +30,5 @@ class ShoppingListSchema(Schema):
     updated = fields.DateTime(allow_none=True)
 
     @post_load
-    def make_user(self, data, **kwargs):
+    def make_list(self, data, **kwargs):
         return ShoppingList(**data)

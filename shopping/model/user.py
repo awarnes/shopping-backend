@@ -1,6 +1,7 @@
 from typing import List, Optional
 from marshmallow import Schema, fields, post_load
-from werkzeug.security import generate_password_hash
+from .preferences import Preferences, PreferencesSchema
+from .roles import Roles
 
 class User:
     def __init__(
@@ -8,14 +9,18 @@ class User:
         username: str,
         password: str,
         name: Optional[str],
+        preferences: Optional[Preferences] = None,
+        products: Optional[List[int]] = None,
         id: Optional[int] = None,
-        roles: Optional[List[str]] = None,
+        roles: Optional[List[Roles]] = None,
         created: Optional[str] = None,
         updated: Optional[str] = None
     ):
         self.name = name
         self.username = username
         self.password = password
+        self.preferences = preferences
+        self.products = products
         self.id = id
         self.roles = roles
         self.created = created
@@ -25,8 +30,10 @@ class UserSchema(Schema):
     name = fields.Str()
     username = fields.Str()
     password = fields.Str()
-    id = fields.Number(allow_none=True)
-    roles = fields.List(fields.Str(), allow_none=True)
+    preferences = fields.Nested(PreferencesSchema)
+    products = fields.List(fields.Int(), allow_none=True)
+    id = fields.Int(allow_none=True)
+    roles = fields.List(fields.Enum(enum=Roles), allow_none=True)
     created = fields.DateTime(allow_none=True)
     updated = fields.DateTime(allow_none=True)
 

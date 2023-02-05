@@ -42,7 +42,7 @@ def get_lists_for_user(user_id: int):
 
 @user_blueprint.route('/user/<int:user_id>/list', methods=['POST'])
 @basic_authentication
-@authorize(required_perms=[Permission.CREATE_SELF_LIST])
+@authorize(required_perms=[Permission.CREATE_SELF_LIST, Permission.CREATE_ANY_LIST])
 def create_list_for_user(user_id: int):
     try:
         shopping_list = ShoppingListSchema().load(request.get_json())
@@ -52,3 +52,9 @@ def create_list_for_user(user_id: int):
     if shopping_lists.create_list_for_user(user_id, shopping_list):
         return make_response(jsonify({"message": f'List created for {user_id}'}), 200)
     return make_response(jsonify({"message": 'List was not created'}), 500)
+
+@user_blueprint.route('/user/<int:user_id>', methods=['PATCH'])
+@basic_authentication
+@authorize(required_perms=[Permission.UPDATE_ANY_USER, Permission.UPDATE_SELF_USER])
+def update_user(user_id: int):
+    pass
