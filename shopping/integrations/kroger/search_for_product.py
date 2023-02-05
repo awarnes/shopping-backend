@@ -19,7 +19,11 @@ def search_for_product(search_term: str, location: str = None):
         authenticate()
         headers = {'Authorization': f'Bearer {g.KROGER_ACCESS_TOKEN}'}
     
-    params = {'filter.term': search_term, 'filter.locationId': location or g.current_user.kroger.preferred_location}
+    params = {
+        'filter.term': search_term,
+        'filter.locationId': location or g.current_user.kroger.preferred_location,
+        # 'filter.productId': '0000000093283'
+    }
 
     response = requests.get(KROGER_SEARCH_URL, headers=headers, params=params).json()
 

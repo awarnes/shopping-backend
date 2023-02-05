@@ -22,10 +22,10 @@ def get_stores(zip_code: str, radius: int):
 
     params = {'filter.zipCode.near': zip_code, 'filter.radiusInMiles': radius}
 
-    resp = requests.get(GET_STORES_URL, headers=headers, params=params).json()
+    response = requests.get(GET_STORES_URL, headers=headers, params=params).json()
 
-    if 'error' in resp and API_401_ERROR in resp["error"]:
+    if 'error' in response and API_401_ERROR in response["error"]:
         authenticate()
         return get_stores(zip_code, radius)
 
-    return resp
+    return response
