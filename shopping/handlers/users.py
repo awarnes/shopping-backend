@@ -24,7 +24,7 @@ def get_user_by_id(id: int) -> User | dict:
         return UserSchema().load(user)
     return {}
 
-def add_or_update_user(user: User) -> User | dict:
+def add_or_update_user(user: User) -> bool:
     roles = user.roles if user.roles else [Roles.USER]
     return insert_one(
         '''
@@ -72,4 +72,3 @@ def add_favorite_product(product: Product) -> User:
         user.products.append(product.id)
         if add_or_update_user(user):
             return user
-    raise Exception("Unable to add favorite product")

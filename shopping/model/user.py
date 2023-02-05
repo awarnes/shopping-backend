@@ -1,5 +1,7 @@
 from typing import List, Optional
 from marshmallow import Schema, fields, post_load
+
+from .brand import Brand
 from .preferences import Preferences, PreferencesSchema
 from .roles import Roles
 
@@ -25,6 +27,15 @@ class User:
         self.roles = roles
         self.created = created
         self.updated = updated
+    
+    def get_preferred_store(self, brand: Brand):
+        match brand:
+            case Brand.KROGER:
+                return self.preferences.kroger.preferred_store
+            case Brand.TRADER_JOES:
+                return self.preferences.trader_joes.preferred_store
+            case _:
+                return None
 
 class UserSchema(Schema):
     name = fields.Str()

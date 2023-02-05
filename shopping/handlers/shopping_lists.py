@@ -53,9 +53,23 @@ def update_list(shopping_list: ShoppingList):
         }
     )
 
-def add_products_to_list(list_id: int, products: List[Product]):
+def add_products_to_list(list_id: int, products: List[Product]) -> ShoppingList:
     shopping_list = get_list_by_id(list_id)
     if shopping_list:
-        shopping_list.products + [product.id for product in products]
+        shopping_list.products += [product.id for product in products]
+        if update_list(shopping_list):
+            return shopping_list
+
+def add_subscribers_to_list(list_id: int, subscribers: List[int]) -> ShoppingList:
+    shopping_list = get_list_by_id(list_id)
+    if shopping_list:
+        shopping_list.subscribers += subscribers
+        if update_list(shopping_list):
+            return shopping_list
+
+def add_owners_to_list(list_id: int, owners: List[int]) -> ShoppingList:
+    shopping_list = get_list_by_id(list_id)
+    if shopping_list:
+        shopping_list.subscribers += owners
         if update_list(shopping_list):
             return shopping_list

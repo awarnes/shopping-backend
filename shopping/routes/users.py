@@ -3,7 +3,7 @@ from marshmallow import ValidationError
 from werkzeug.security import generate_password_hash
 
 from ..lib.decorators import authorize, basic_authentication
-from ..handlers import shopping_lists, users
+from ..handlers import products, shopping_lists, users
 
 from ..model.product import ProductSchema
 from ..model.roles import Permission
@@ -28,7 +28,7 @@ def add_user():
     except ValidationError as error:
         return error, 400
     user.password = generate_password_hash(user.password)
-    if users.add_user(user):
+    if users.add_or_update_user(user):
         return '', 200
     return make_response(jsonify({"message": "User failed to be added"}), 500)
 
@@ -38,6 +38,10 @@ def add_user():
 #     if authenticated_user:
 #         return '', 204
 #     return 'Authentication failed', 401
+
+@user_blueprint.route('/user/<int:user_id>/product')
+def get_products_for_user(user_id: int):
+    return jsonify(ProductSchema().dump(products.get_products_for_user(user_id), many=True))
 
 @user_blueprint.route('/user/<int:user_id>/list')
 def get_lists_for_user(user_id: int):
@@ -60,7 +64,13 @@ def create_list_for_user(user_id: int):
 @basic_authentication
 @authorize(required_perms=[Permission.UPDATE_ANY_USER, Permission.UPDATE_SELF_USER])
 def update_user(user_id: int):
-    pass
+    try:
+        user = UserSchema().load(request.get_json())
+    except ValidationError as error:
+        return error, 400
+    if users.add_or_update_user(user):
+        return '', 200
+    return make_response(jsonify({"message": "User failed to be added"}), 500)
 
 @user_blueprint.route('/user/<int:user_id>/product', methods=['POST'])
 @basic_authentication

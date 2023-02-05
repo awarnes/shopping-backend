@@ -1,4 +1,5 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, g, jsonify, request
+from ..lib.decorators import basic_authentication
 from ..model.brand import Brand
 from ..integrations import get_integrator
 
@@ -12,8 +13,9 @@ def get_stores(integrator: str):
     return jsonify(get_integrator(integrator).get_stores(zip_code=zip_code, radius=radius))
 
 @integrator_blueprint.route('/integrator/<string:integrator>/products')
+@basic_authentication
 def search_for_product(integrator: str):
     integrator = Brand(integrator.upper())
     search_term = request.args.get('search_term', default=None)
-    location = request.args.get('location', default=None)
+    location = request.args.get('location', default=g.current_user.get_preferred_store(integrator))
     return jsonify(get_integrator(integrator).search_for_product(search_term=search_term, location=location))

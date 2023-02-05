@@ -1,5 +1,6 @@
 from enum import Enum
 from flask import g
+from ..handlers.shopping_lists import get_list_by_id
 
 class Roles(str, Enum):
     ADMIN = "ADMIN"
@@ -63,8 +64,13 @@ class PermissionException(Exception):
 def validate_self_permission(data) -> bool:
     return g.current_user.id == data["user_id"]
 
+def validate_ownership_permission(data) -> bool:
+    if data.get('list_id'):
+        return g.current_user.id in get_list_by_id(data.get('list_id')).owners
+
 PERMISSIONS_MAP = {
-    Permission.CREATE_SELF_LIST: validate_self_permission
+    Permission.CREATE_SELF_LIST: validate_self_permission,
+    Permission.UPDATE_SELF_LIST: validate_ownership_permission
 }
 
 def verify_permission(perm: Permission, *args, **kwargs):
