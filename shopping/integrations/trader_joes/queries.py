@@ -1,5 +1,3 @@
-from .graphql import make_query
-
 PRODUCT_QUERY = '''
     query SearchProducts($search_term: String, $page_size: Int, $current_page: Int, $location: String, $availability: String, $published: String, $sku: String) {
         products(
@@ -40,18 +38,3 @@ PRODUCT_QUERY = '''
         }
     }
 '''
-
-def search_for_product(search_term: str, location: str = None):
-    variables = {
-        'availability': '1',
-        'published': '1',
-        'page_size': 10,
-        'current_page': 1,
-        'location': location,
-        'search_term': search_term,
-        # 'sku': '055005'
-    }
-
-    response = make_query(PRODUCT_QUERY, variables=variables)
-    
-    return response

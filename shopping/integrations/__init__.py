@@ -12,8 +12,8 @@ Register the function in the associated integrator's __init__.py like:
 from .hello import hello
 """
 from ..model.brand import Brand
-from . import kroger
-from . import trader_joes
+from .kroger import kroger
+from .trader_joes import trader_joes
 
 class IntegratorException(Exception):
     pass
