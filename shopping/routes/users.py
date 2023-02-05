@@ -4,9 +4,12 @@ from werkzeug.security import generate_password_hash
 
 from ..lib.decorators import authorize, basic_authentication
 from ..handlers import shopping_lists, users
-from ..model.user import UserSchema
-from ..model.shopping_list import ShoppingListSchema
+
+from ..model.product import ProductSchema
 from ..model.roles import Permission
+from ..model.shopping_list import ShoppingListSchema
+from ..model.user import UserSchema
+
 
 user_blueprint = Blueprint('user', __name__)
 
@@ -58,3 +61,16 @@ def create_list_for_user(user_id: int):
 @authorize(required_perms=[Permission.UPDATE_ANY_USER, Permission.UPDATE_SELF_USER])
 def update_user(user_id: int):
     pass
+
+@user_blueprint.route('/user/<int:user_id>/product', methods=['POST'])
+@basic_authentication
+@authorize(required_perms=[Permission.CREATE_ANY_PRODUCT, Permission.CREATE_SELF_PRODUCT])
+def add_favorite_product(user_id: int):
+    try:
+        product = ProductSchema().load(request.get_json())
+    except ValidationError as error:
+        return error, 400
+    
+    if users.add_favorite_product(user_id, product):
+        return make_response(jsonify({"message": f'Favorite added for {user_id}'}), 200)
+    return make_response(jsonify({"message": 'Product not favorited'}), 500)
