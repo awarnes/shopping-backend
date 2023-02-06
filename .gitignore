@@ -3,3 +3,7 @@
 .DS_Store
 !.gitkeep
 db/shopping.db
+**/secrets.json
+**/trader_joes_schema_feb_2023.json
+
+test.py

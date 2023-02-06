@@ -1,36 +1,37 @@
 from enum import Enum
 from flask import g
+from ..handlers.shopping_lists import get_list_by_id
 
 class Roles(str, Enum):
-    ADMIN = "admin"
-    USER = "user"
-    ANONYMOUS = "anonymous"
+    ADMIN = "ADMIN"
+    USER = "USER"
+    ANONYMOUS = "ANONYMOUS"
 
 class Permission(str, Enum):
-    ALL = "all"
-    CREATE_USER = "create_user"
-    READ_SELF_USER = "read_self_user"
-    UPDATE_SELF_USER = "update_self_user"
-    DELETE_SELF_USER = "delete_self_user"
-    READ_ANY_USER = "read_any_user"
-    UPDATE_ANY_USER = "update_any_user"
-    DELETE_ANY_USER = "delete_any_user"
-    CREATE_SELF_LIST = "create_self_list"
-    READ_SELF_LIST = "read_self_list"
-    UPDATE_SELF_LIST = "update_self_list"
-    DELETE_SELF_LIST = "delete_self_list"
-    CREATE_ANY_LIST = "create_any_list"
-    READ_ANY_LIST = "read_any_list"
-    UPDATE_ANY_LIST = "update_any_list"
-    DELETE_ANY_LIST = "delete_any_list"
-    CREATE_SELF_PRODUCT = "create_self_product"
-    READ_SELF_PRODUCT = "read_self_product"
-    UPDATE_SELF_PRODUCT = "update_self_product"
-    DELETE_SELF_PRODUCT = "delete_self_product"
-    CREATE_ANY_PRODUCT = "create_any_product"
-    READ_ANY_PRODUCT = "read_any_product"
-    UPDATE_ANY_PRODUCT = "update_any_product"
-    DELETE_ANY_PRODUCT = "delete_any_product"
+    ALL = "ALL"
+    CREATE_USER = "CREATE_USER"
+    READ_SELF_USER = "READ_SELF_USER"
+    UPDATE_SELF_USER = "UPDATE_SELF_USER"
+    DELETE_SELF_USER = "DELETE_SELF_USER"
+    READ_ANY_USER = "READ_ANY_USER"
+    UPDATE_ANY_USER = "UPDATE_ANY_USER"
+    DELETE_ANY_USER = "DELETE_ANY_USER"
+    CREATE_SELF_LIST = "CREATE_SELF_LIST"
+    READ_SELF_LIST = "READ_SELF_LIST"
+    UPDATE_SELF_LIST = "UPDATE_SELF_LIST"
+    DELETE_SELF_LIST = "DELETE_SELF_LIST"
+    CREATE_ANY_LIST = "CREATE_ANY_LIST"
+    READ_ANY_LIST = "READ_ANY_LIST"
+    UPDATE_ANY_LIST = "UPDATE_ANY_LIST"
+    DELETE_ANY_LIST = "DELETE_ANY_LIST"
+    CREATE_SELF_PRODUCT = "CREATE_SELF_PRODUCT"
+    READ_SELF_PRODUCT = "READ_SELF_PRODUCT"
+    UPDATE_SELF_PRODUCT = "UPDATE_SELF_PRODUCT"
+    DELETE_SELF_PRODUCT = "DELETE_SELF_PRODUCT"
+    CREATE_ANY_PRODUCT = "CREATE_ANY_PRODUCT"
+    READ_ANY_PRODUCT = "READ_ANY_PRODUCT"
+    UPDATE_ANY_PRODUCT = "UPDATE_ANY_PRODUCT"
+    DELETE_ANY_PRODUCT = "DELETE_ANY_PRODUCT"
 
 ROLE_MAP = {
     Roles.ADMIN: [Permission.ALL],
@@ -63,12 +64,17 @@ class PermissionException(Exception):
 def validate_self_permission(data) -> bool:
     return g.current_user.id == data["user_id"]
 
+def validate_ownership_permission(data) -> bool:
+    if list_id := data.get('list_id'):
+        return g.current_user.id in get_list_by_id(list_id).owners
+
 PERMISSIONS_MAP = {
-    Permission.CREATE_SELF_LIST: validate_self_permission
+    Permission.CREATE_SELF_LIST: validate_self_permission,
+    Permission.UPDATE_SELF_LIST: validate_ownership_permission
 }
 
 def verify_permission(perm: Permission, *args, **kwargs):
-    validate_func = PERMISSIONS_MAP[perm]
+    validate_func = PERMISSIONS_MAP.get(perm)
 
     if not validate_func:
         return True

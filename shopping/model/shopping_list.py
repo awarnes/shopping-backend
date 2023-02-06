@@ -1,13 +1,12 @@
-from dataclasses import dataclass
 from typing import List, Optional
 from marshmallow import Schema, fields, post_load
 
 class ShoppingList:
     def __init__(
         self,
-        items: List[int],
-        owners: List[int],
-        subscribers: Optional[List[int]],
+        products: List[int] = [],
+        owners: List[int] = [],
+        subscribers: Optional[List[int]] = [],
         name: Optional[str] = None,
         id: Optional[int] = None,
         created: Optional[str] = None,
@@ -15,7 +14,7 @@ class ShoppingList:
     ):
         self.id = id
         self.name = name
-        self.items = items
+        self.products = products
         self.owners = owners
         self.subscribers = subscribers
         self.created = created
@@ -24,12 +23,12 @@ class ShoppingList:
 class ShoppingListSchema(Schema):
     id = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
-    items = fields.List(fields.Int)
-    owners = fields.List(fields.Int)
-    subscribers = fields.List(fields.Int, allow_none=True)
+    products = fields.List(fields.Int(), allow_none=True)
+    owners = fields.List(fields.Int(), allow_none=True)
+    subscribers = fields.List(fields.Int(), allow_none=True)
     created = fields.DateTime(allow_none=True)
     updated = fields.DateTime(allow_none=True)
 
     @post_load
-    def make_user(self, data, **kwargs):
+    def make_list(self, data, **kwargs):
         return ShoppingList(**data)

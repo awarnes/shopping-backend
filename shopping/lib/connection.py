@@ -35,14 +35,18 @@ def fetch_all(sql, params=[]):
                 cur.execute(sql, params)
                 return cur.fetchall()
 
-def insert_one(sql, params=[]):
+def insert_one(sql, params=[], returning=False):
     with closing(get_connection()) as conn, conn, \
         closing(conn.cursor()) as cur:
             cur.execute(sql, params)
+            if returning:
+                return cur.fetchone()
             return True
 
-def insert_many(sql, params=[]):
+def insert_many(sql, params=[], returning=False):
     with closing(get_connection()) as conn, conn, \
         closing(conn.cursor()) as cur:
             cur.executemany(sql, params)
+            if returning:
+                return cur.fetchall()
             return True
