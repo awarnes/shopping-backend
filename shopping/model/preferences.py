@@ -52,9 +52,9 @@ class Preferences:
         self.user = UserPreferences(user)
 
 class PreferencesSchema(Schema):
-    kroger = fields.Nested(KrogerPreferencesSchema)
-    trader_joes = fields.Nested(TraderJoesPreferencesSchema)
-    user = fields.Nested(UserPreferencesSchema)
+    kroger = fields.Nested(KrogerPreferencesSchema())
+    trader_joes = fields.Nested(TraderJoesPreferencesSchema())
+    user = fields.Nested(UserPreferencesSchema())
 
     @post_load
     def make_preferences(self, data, **kwargs):

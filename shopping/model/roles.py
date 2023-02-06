@@ -65,8 +65,8 @@ def validate_self_permission(data) -> bool:
     return g.current_user.id == data["user_id"]
 
 def validate_ownership_permission(data) -> bool:
-    if data.get('list_id'):
-        return g.current_user.id in get_list_by_id(data.get('list_id')).owners
+    if list_id := data.get('list_id'):
+        return g.current_user.id in get_list_by_id(list_id).owners
 
 PERMISSIONS_MAP = {
     Permission.CREATE_SELF_LIST: validate_self_permission,
@@ -74,7 +74,7 @@ PERMISSIONS_MAP = {
 }
 
 def verify_permission(perm: Permission, *args, **kwargs):
-    validate_func = PERMISSIONS_MAP[perm]
+    validate_func = PERMISSIONS_MAP.get(perm)
 
     if not validate_func:
         return True

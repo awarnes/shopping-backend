@@ -1,0 +1,747 @@
+{
+	"info": {
+		"_postman_id": "83027efc-2f6d-4d73-bf5c-aa489d1bbe11",
+		"name": "Flask Shopping Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19699776"
+	},
+	"item": [
+		{
+			"name": "Get Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}/users",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By ID",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "powers",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "austin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}/user/8",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"user",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"austin powers\",\n    \"username\": \"alcalc\",\n    \"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/user",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Lists for User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/user/8/list",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"user",
+						"8",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products for User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/user/8/product",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"user",
+						"8",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Products for List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/list/1/products",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"list",
+						"1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get List By Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"apple\",\n    \"email\": \"a@b.c\",\n    \"phone\": \"1234567890\",\n    \"address\": \"123 Fake St\",\n    \"country\": \"Appleachia\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/list/1",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"list",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product By Id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"apple\",\n    \"email\": \"a@b.c\",\n    \"phone\": \"1234567890\",\n    \"address\": \"123 Fake St\",\n    \"country\": \"Appleachia\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/product/1",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Kroger Stores",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/integrator/kroger/stores?zip_code=97216",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"integrator",
+						"kroger",
+						"stores"
+					],
+					"query": [
+						{
+							"key": "zip_code",
+							"value": "97216"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Kroger Products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "alcalc",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/integrator/kroger/products?search_term=apple&location=70100128",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"integrator",
+						"kroger",
+						"products"
+					],
+					"query": [
+						{
+							"key": "search_term",
+							"value": "apple"
+						},
+						{
+							"key": "location",
+							"value": "70100128"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get TraderJoes Stores",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/integrator/trader_joes/stores",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"integrator",
+						"trader_joes",
+						"stores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get TraderJoes Products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "alcalc",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/integrator/trader_joes/products?search_term=apple&location=144",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"integrator",
+						"trader_joes",
+						"products"
+					],
+					"query": [
+						{
+							"key": "search_term",
+							"value": "apple"
+						},
+						{
+							"key": "location",
+							"value": "144"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create List for User",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "alcalc",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"products\": [],\n    \"owners\": [],\n    \"subscribers\":[],\n    \"name\": \"Joint Shopping List\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/user/8/list",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"user",
+						"8",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add favorite product",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "alcalc",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Simple Truth Organic™ Honeycrisp Apples\",\n    \"tags\": [\"fruit\", \"produce\"],\n    \"brand\": \"KROGER\",\n    \"sku\": \"0000000093283\",\n    \"location\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/user/8/product",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"user",
+						"8",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add products to list",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "alcalc",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"brand\": \"KROGER\",\n        \"created\": \"2023-02-05 23:53:30\",\n        \"id\": 1,\n        \"location\": null,\n        \"name\": \"Simple Truth Organic™ Honeycrisp Apples\",\n        \"sku\": \"0000000093283\",\n        \"tags\": [\n            \"fruit\",\n            \"produce\"\n        ],\n        \"updated\": \"2023-02-05 23:53:30\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/list/1/products",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"list",
+						"1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add subscribers to list",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "alcalc",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[1, 2, 3]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/list/1/subscribers",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"list",
+						"1",
+						"subscribers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add owners to list",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "alcalc",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[1, 2, 3]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostname}}/list/1/owners",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"list",
+						"1",
+						"owners"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[TESTING] TraderJoes Search Products",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query SearchProducts($search: String, $pageSize: Int, $currentPage: Int, $storeCode: String, $availability: String, $published: String) {\n    products(\n        search: $search\n        filter: {store_code: {eq: $storeCode}, published: {eq: $published}, availability: {match: $availability}}\n        pageSize: $pageSize\n        currentPage: $currentPage\n    ) {\n        items {\n            availability\n            item_title\n            retail_price\n            sku\n        }\n        page_info {\n            current_page\n            page_size\n            total_pages\n        }\n    }\n}",
+						"variables": "{\n    \"search\": \"bananas\",\n    \"pageSize\": 10,\n    \"currentPage\": 1,\n    \"storeCode\": \"146\",\n    \"availability\": \"1\",\n    \"published\": \"1\"\n}"
+					}
+				},
+				"url": {
+					"raw": "https://www.traderjoes.com/api/graphql",
+					"protocol": "https",
+					"host": [
+						"www",
+						"traderjoes",
+						"com"
+					],
+					"path": [
+						"api",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[TESTING] TraderJoes Get Stores",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"appkey\": \"8BC3433A-60FC-11E3-991D-B2EE0C70A832\",\n    \"formdata\": {\n        \"geolocs\": {\n            \"geoloc\": [\n                {\n                    \"addressline\": \"97216\",\n                    \"country\": \"US\"\n                }\n            ]\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://alphaapi.brandify.com/rest/locatorsearch",
+					"protocol": "https",
+					"host": [
+						"alphaapi",
+						"brandify",
+						"com"
+					],
+					"path": [
+						"rest",
+						"locatorsearch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[TESTING] TraderJoes Introspect Schema",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query IntrospectionQuery {\n      __schema {\n        queryType { name }\n        mutationType { name }\n        subscriptionType { name }\n        types {\n          ...FullType\n        }\n        directives {\n          name\n          description\n          locations\n          args {\n            ...InputValue\n          }\n        }\n      }\n    }\n\n    fragment FullType on __Type {\n      kind\n      name\n      description\n      fields(includeDeprecated: true) {\n        name\n        description\n        args {\n          ...InputValue\n        }\n        type {\n          ...TypeRef\n        }\n        isDeprecated\n        deprecationReason\n      }\n      inputFields {\n        ...InputValue\n      }\n      interfaces {\n        ...TypeRef\n      }\n      enumValues(includeDeprecated: true) {\n        name\n        description\n        isDeprecated\n        deprecationReason\n      }\n      possibleTypes {\n        ...TypeRef\n      }\n    }\n\n    fragment InputValue on __InputValue {\n      name\n      description\n      type { ...TypeRef }\n      defaultValue\n    }\n\n    fragment TypeRef on __Type {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                  ofType {\n                    kind\n                    name\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }",
+						"variables": "{\n    \"search\": \"bananas\",\n    \"pageSize\": 10,\n    \"currentPage\": 1,\n    \"storeCode\": \"146\",\n    \"availability\": \"1\",\n    \"published\": \"1\"\n}"
+					}
+				},
+				"url": {
+					"raw": "https://www.traderjoes.com/api/graphql",
+					"protocol": "https",
+					"host": [
+						"www",
+						"traderjoes",
+						"com"
+					],
+					"path": [
+						"api",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hostname",
+			"value": "localhost:5123",
+			"type": "string"
+		}
+	]
+}

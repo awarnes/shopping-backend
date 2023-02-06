@@ -29,12 +29,15 @@ def authorize(required_perms: List[Permission]):
         @wraps(func)
         def wrapper_authorize(*args, **kwargs):
             authorized = False
-            user_perms = get_user_permissions(kwargs['user_id'])
+            user_id: int = kwargs.get('user_id') or g.current_user.id
+            user_perms = get_user_permissions(user_id)
             if not user_perms:
                 return make_response(jsonify({"message": "User not found", "code": 404}), 404)
-            if len(set(required_perms).difference(set(user_perms))) == 0:
+            if len(set(user_perms).intersection(set(required_perms))) > 0:
                 for perm in required_perms:
+                    print(perm)
                     authorized = verify_permission(perm, *args, **kwargs)
+                    print(authorized)
             if authorized:
                 return func(*args, **kwargs)
             return make_response(jsonify({"message": "Unauthorized", "code": 401}), 401)

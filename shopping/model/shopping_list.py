@@ -4,9 +4,9 @@ from marshmallow import Schema, fields, post_load
 class ShoppingList:
     def __init__(
         self,
-        products: List[int],
-        owners: List[int],
-        subscribers: Optional[List[int]],
+        products: List[int] = [],
+        owners: List[int] = [],
+        subscribers: Optional[List[int]] = [],
         name: Optional[str] = None,
         id: Optional[int] = None,
         created: Optional[str] = None,
@@ -23,9 +23,9 @@ class ShoppingList:
 class ShoppingListSchema(Schema):
     id = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
-    products = fields.List(fields.Int)
-    owners = fields.List(fields.Int)
-    subscribers = fields.List(fields.Int, allow_none=True)
+    products = fields.List(fields.Int(), allow_none=True)
+    owners = fields.List(fields.Int(), allow_none=True)
+    subscribers = fields.List(fields.Int(), allow_none=True)
     created = fields.DateTime(allow_none=True)
     updated = fields.DateTime(allow_none=True)
 

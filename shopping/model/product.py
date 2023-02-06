@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Optional
 from marshmallow import Schema, fields, post_load
 from .preferences import Brand
@@ -32,9 +32,9 @@ class Product:
     name: str
     brand: Brand
     sku: str
-    location: Optional[Location]
+    location: Optional[Location] = None
     id: Optional[int] = None
-    tags: Optional[List[str]] = None
+    tags: Optional[List[str]] = field(default_factory=[])
     created: Optional[str] = None
     updated: Optional[str] = None
 
@@ -42,9 +42,9 @@ class ProductSchema(Schema):
     name = fields.Str()
     brand = fields.Enum(enum=Brand)
     sku = fields.Str()
-    location = fields.Nested(LocationSchema, allow_none=True)
+    location = fields.Nested(LocationSchema(), allow_none=True)
     id = fields.Int(allow_none=True)
-    tags = fields.List(fields.Str, allow_none=True)
+    tags = fields.List(fields.Str(), allow_none=True)
     created = fields.Str(allow_none=True)
     updated = fields.Str(allow_none=True)
 
